@@ -34,6 +34,8 @@ main {
 
 .blackLetter{
     color: black;
+  
+ 
 }
 
 
@@ -42,6 +44,13 @@ main {
     font-size: smaller;
 }
 
-hr { height: 1px;
+hr.blackLine { height: 1px;
     border: 0;
     border-top: 1px solid black;}
+
+
+a{
+    text-decoration: none;
+}
+
+

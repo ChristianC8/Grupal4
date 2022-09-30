@@ -44,8 +44,7 @@ async function filtrar(){
         if(genresR){
           contadorGenres++
         }
-        localStorage.setItem(`mo${movie.title}`,JSON.stringify(movie.genres[i]))
-/*         console.log(movies.title) */
+
       }
 
       if((titleR || taglineR || overview || contadorGenres != 0) && buscador.value.length != 0 ){
@@ -53,37 +52,49 @@ async function filtrar(){
         
   
           append += `
-          <li class="list-group-item d-flex justify-content-between align-items-start bg-dark" id="peli${index}"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop-${index}" aria-controls="offcanvasTop-${index}">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">${movie.title}</div>
-                  <p class="fst-italic text-muted"> ${movie.tagline}</p>
-                </div>
-                ${mostrarEstrellas(movie.vote_average)}
+    
+
+          <li class="list-group-item  align-items-start bg-dark" id="peli${index}"> 
+
+          <a  data-bs-toggle="offcanvas" href="#offcanvasExample${index}"  aria-controls="offcanvasExample" class="d-flex justify-content-between" >
+          
+          <div class="ms-2 me-auto">
+          <div class="fw-bold">${movie.title}</div>
+          <p class="fst-italic text-muted"> ${movie.tagline}</p>
+        </div>
+        ${mostrarEstrellas(movie.vote_average)}
+          </a>
 
 
-
-
-
-                <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop-${index}" aria-labelledby="offcanvasTopLabel">
-                <div class="offcanvas-header">
-                  <h5 class="offcanvas-title blackLetter" id="offcanvasTopLabel">${movie.title}</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                <p class="blackLetter"> ${movie.overview}</p>
-                <hr>
-                <p class="blackLetterS">${mostrarGeneros(movie)}</p>
-                </div>
-              </div>
-
-
-
-
-
-
-
-
-
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasExample${index}" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title blackLetter" id="offcanvasExampleLabel">${movie.title}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" id="btnD"></button>
+  </div>
+  <div class="offcanvas-body" style="overflow-y: visible;">
+    <div>
+    <p class="blackLetter"> ${movie.overview}</p>
+    <hr class="blackLine">
+    </div>
+    
+    
+    <div class="dropdown mt-3 d-flex justify-content-between">
+    <p class="blackLetterS">${mostrarGeneros(movie)}</p>
+    <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      More
+    </button>
+    <ul class="dropdown-menu">
+      <li><p class="dropdown-item" href="#">Year: ${movie.release_date.slice(0, 4)} </p></li>
+      <li><p class="dropdown-item" href="#">Runtime:${movie.runtime} min </p></li>
+      <li><p class="dropdown-item" href="#">Budget:$${movie.budget} </p></li>
+      <li><p class="dropdown-item" href="#">Revenue:$${movie.revenue} </p></li>
+    </ul>
+  </div>
+    </div>
+  </div>
+</div>
+    
 
 
 
