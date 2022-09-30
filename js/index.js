@@ -30,21 +30,21 @@ async function filtrar(){
   let append = " "
   const result = await getJSONData(const_url)
   let pelis = result.data
-    console.log(pelis)
+   /*  console.log(pelis) */
 
-  pelis.filter(function(movies,index){
-    console.log(movies)
-      let titleR = movies.title.toLowerCase().includes(buscador.value.toLowerCase())
-      let taglineR =   movies.tagline.toLowerCase().includes(buscador.value.toLowerCase())
-      let overview =   movies.overview.toLowerCase().includes(buscador.value.toLowerCase())
+  pelis.filter(function(movie,index){
+/*     console.log(movie) */
+      let titleR = movie.title.toLowerCase().includes(buscador.value.toLowerCase())
+      let taglineR =   movie.tagline.toLowerCase().includes(buscador.value.toLowerCase())
+      let overview =   movie.overview.toLowerCase().includes(buscador.value.toLowerCase())
 
       let contadorGenres = 0
-      for(let i = 0;i < Object.keys(movies.genres).length;i++ ){
-        var genresR = movies.genres[i].name.toLowerCase().includes(buscador.value.toLowerCase()) 
+      for(let i = 0;i < Object.keys(movie.genres).length;i++ ){
+        var genresR = movie.genres[i].name.toLowerCase().includes(buscador.value.toLowerCase()) 
         if(genresR){
           contadorGenres++
         }
-        localStorage.setItem(`mo${movies.title}`,JSON.stringify(movies.genres[i]))
+        localStorage.setItem(`mo${movie.title}`,JSON.stringify(movie.genres[i]))
 /*         console.log(movies.title) */
       }
 
@@ -55,10 +55,10 @@ async function filtrar(){
           append += `
           <li class="list-group-item d-flex justify-content-between align-items-start bg-dark" id="peli${index}"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop-${index}" aria-controls="offcanvasTop-${index}">
                 <div class="ms-2 me-auto">
-                  <div class="fw-bold">${movies.title}</div>
-                  <p class="fst-italic text-muted"> ${movies.tagline}</p>
+                  <div class="fw-bold">${movie.title}</div>
+                  <p class="fst-italic text-muted"> ${movie.tagline}</p>
                 </div>
-                ${mostrarEstrellas(movies.vote_average)}
+                ${mostrarEstrellas(movie.vote_average)}
 
 
 
@@ -66,13 +66,13 @@ async function filtrar(){
 
                 <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop-${index}" aria-labelledby="offcanvasTopLabel">
                 <div class="offcanvas-header">
-                  <h5 class="offcanvas-title blackLetter" id="offcanvasTopLabel">${movies.title}</h5>
+                  <h5 class="offcanvas-title blackLetter" id="offcanvasTopLabel">${movie.title}</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                <p class="blackLetter"> ${movies.overview}</p>
+                <p class="blackLetter"> ${movie.overview}</p>
                 <hr>
-                <p class="blackLetterS">${movies}</p>
+                <p class="blackLetterS">${mostrarGeneros(movie)}</p>
                 </div>
               </div>
 
@@ -91,13 +91,35 @@ async function filtrar(){
           `
 
 
-document.getElementById("lista").innerHTML += append
+document.getElementById("lista").innerHTML = append
+/* console.log(append) */
       } 
 
     
   })
 
 }
+
+
+
+
+
+function mostrarGeneros(array){
+    let genresArray = []
+   for(let i = 0;i < Object.keys(array.genres).length;i++ ){
+      genresArray.push(array.genres[i].name)
+    }
+ return`${genresArray.join('-')}`
+}
+
+
+
+
+
+
+
+
+
 
 
 function mostrarEstrellas(votos){
